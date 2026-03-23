@@ -91,6 +91,35 @@ export interface BrandMatch {
   brand?: Brand
 }
 
+// ---- Performance ----
+
+export interface StatRow {
+  label: string   // e.g. "40-Yard Dash"
+  value: string   // e.g. "4.38"
+  unit: string    // e.g. "sec"
+}
+
+export interface PerformanceMedia {
+  id: string
+  entry_id: string
+  storage_path: string
+  file_name: string
+  mime_type: string
+  size_bytes: number | null
+  created_at: string
+}
+
+export interface PerformanceEntry {
+  id: string
+  athlete_id: string
+  recorded_at: string       // ISO date string "YYYY-MM-DD"
+  stats: StatRow[]
+  notes: string | null
+  created_at: string
+  updated_at: string
+  media?: PerformanceMedia[]
+}
+
 // API request/response shapes
 export interface GenerateContentRequest {
   athlete_id: string

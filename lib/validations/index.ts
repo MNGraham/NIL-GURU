@@ -32,3 +32,23 @@ export const generateBrandMatchesSchema = z.object({
 export const updateMatchStatusSchema = z.object({
   status: z.enum(['suggested', 'interested', 'contacted', 'declined', 'deal']),
 })
+
+const statRowSchema = z.object({
+  label: z.string().min(1).max(80),
+  value: z.string().min(1).max(40),
+  unit:  z.string().max(20).default(''),
+})
+
+export const performanceEntrySchema = z.object({
+  athlete_id:  z.string().uuid(),
+  recorded_at: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  stats:       z.array(statRowSchema).max(30).default([]),
+  notes:       z.string().max(2000).optional(),
+  // paths already uploaded to Supabase Storage by the client
+  media: z.array(z.object({
+    storage_path: z.string().min(1),
+    file_name:    z.string().min(1),
+    mime_type:    z.string().min(1),
+    size_bytes:   z.number().int().nonnegative().optional(),
+  })).max(10).default([]),
+})

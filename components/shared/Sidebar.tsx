@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const nav = [
-  { href: '/dashboard/athletes', label: 'Athletes', icon: '🏃' },
-  { href: '/dashboard/content',  label: 'Content',  icon: '✍️' },
-  { href: '/dashboard/brands',   label: 'Brands',   icon: '🤝' },
-  { href: '/dashboard/profile',  label: 'NIL Profile', icon: '⭐' },
+  { href: '/dashboard/athletes',    label: 'Athletes',    icon: '🏃' },
+  { href: '/dashboard/performance', label: 'Performance', icon: '📊' },
+  { href: '/dashboard/content',     label: 'Content',     icon: '✍️' },
+  { href: '/dashboard/brands',      label: 'Brands',      icon: '🤝' },
+  { href: '/dashboard/profile',     label: 'NIL Profile', icon: '⭐' },
 ]
 
 export default function Sidebar() {
