@@ -39,6 +39,16 @@ const statRowSchema = z.object({
   unit:  z.string().max(20).default(''),
 })
 
+export const generateSocialPackSchema = z.object({
+  athlete_id:  z.string().uuid(),
+  stats:       z.array(z.object({
+    label: z.string().min(1).max(80),
+    value: z.string().min(1).max(40),
+    unit:  z.string().max(20).default(''),
+  })).max(30).default([]),
+  notes:       z.string().max(2000).optional(),
+})
+
 export const performanceEntrySchema = z.object({
   athlete_id:  z.string().uuid(),
   recorded_at: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

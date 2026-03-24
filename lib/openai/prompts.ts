@@ -1,4 +1,4 @@
-import type { Athlete, ContentTone, Platform, ContentType } from '@/types'
+import type { Athlete, ContentTone, Platform, ContentType, StatRow } from '@/types'
 
 export function buildContentPrompt(
   athlete: Athlete,
@@ -45,6 +45,45 @@ Create:
 3. 3–5 content category tags (e.g. "fitness", "lifestyle", "gaming")
 
 Return JSON: { "headline": "...", "bio": "...", "categories": ["..."] }`
+}
+
+export function buildSocialPackPrompt(
+  athlete: Athlete,
+  stats: StatRow[],
+  notes?: string
+): string {
+  const statsLines = stats.length
+    ? stats.map(s => `- ${s.label}: ${s.value}${s.unit ? ' ' + s.unit : ''}`).join('\n')
+    : '- No stats provided'
+
+  return `You are a sports marketing expert creating NIL (Name, Image, Likeness) social content for a college athlete.
+
+Athlete:
+- Sport: ${athlete.sport}
+- Position: ${athlete.position ?? 'N/A'}
+- School: ${athlete.school ?? 'N/A'}
+
+Performance Data:
+${statsLines}${notes ? `\n\nCoach/Athlete Notes: ${notes}` : ''}
+
+Generate three distinct pieces of social content based on this performance:
+
+1. Instagram Caption — engaging, emoji-friendly, 150–300 characters, celebration tone
+2. TikTok Script — structured as: hook (first 3 sec to stop the scroll), body (20–30 sec of storytelling), cta (call-to-action); conversational and energetic
+3. Story Caption — punchy 1–2 sentences, max 80 characters, ideal for IG/TikTok story text overlay
+
+Rules:
+- Reference the actual stats — no generic sports clichés
+- Each piece must feel native to its platform
+- Include 3–5 relevant hashtags per piece
+- Keep NIL context: this athlete is building their personal brand
+
+Return JSON exactly:
+{
+  "instagram_caption": { "body": "...", "hashtags": ["..."] },
+  "tiktok_script": { "hook": "...", "body": "...", "cta": "...", "hashtags": ["..."] },
+  "story_caption": { "body": "...", "hashtags": ["..."] }
+}`
 }
 
 export function buildBrandMatchPrompt(

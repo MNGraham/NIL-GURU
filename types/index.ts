@@ -120,6 +120,14 @@ export interface PerformanceEntry {
   media?: PerformanceMedia[]
 }
 
+export interface SocialContentPack {
+  instagram_caption: { body: string; hashtags: string[] }
+  tiktok_script:     { hook: string; body: string; cta: string; hashtags: string[] }
+  story_caption:     { body: string; hashtags: string[] }
+  prompt:            string
+  generated_at:      string
+}
+
 // API request/response shapes
 export interface GenerateContentRequest {
   athlete_id: string
