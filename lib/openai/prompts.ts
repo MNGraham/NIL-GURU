@@ -86,6 +86,62 @@ Return JSON exactly:
 }`
 }
 
+export function buildEnhancedNilProfilePrompt(
+  athlete: Athlete,
+  performanceStats: StatRow[],
+  sport: string
+): string {
+  const statsLines = performanceStats.length
+    ? performanceStats.map(s => `- ${s.label}: ${s.value}${s.unit ? ' ' + s.unit : ''}`).join('\n')
+    : '- No performance data provided'
+
+  return `You are an elite NIL (Name, Image, Likeness) talent evaluator for college athletes. Analyze the athlete below and generate a comprehensive NIL profile.
+
+Athlete:
+- Sport: ${sport}
+- Position: ${athlete.position ?? 'N/A'}
+- School: ${athlete.school ?? 'N/A'}
+- Graduation Year: ${athlete.graduation_year ?? 'N/A'}
+- Social Handles: Instagram ${athlete.instagram ?? 'none'}, TikTok ${athlete.tiktok ?? 'none'}, Twitter ${athlete.twitter ?? 'none'}
+
+Performance Data:
+${statsLines}
+
+Generate:
+
+1. **Bio** (3–5 sentences): A professional athlete bio written for brand partners. Highlight what makes this athlete unique, reference specific performance numbers, and position them as a marketable personality — not just a player.
+
+2. **Strengths** (4–6 items): Specific, data-backed strengths derived from the performance stats. Go beyond generic traits — tie each strength to the actual numbers (e.g. "Elite sprint speed (4.38s 40-yard dash)" not just "Fast").
+
+3. **Brand Appeal Score** (0–100): Score how marketable this athlete is to brands. Consider:
+   - Performance level relative to their sport
+   - Social media presence (handles provided vs missing)
+   - School visibility / conference level
+   - Position marketability (QBs > kickers, PGs > bench, etc.)
+   Be honest — a walk-on at a small school with no socials should score 20–35, not 70.
+
+4. **Audience Persona**: Describe the ideal follower / fan of this athlete:
+   - archetype: a catchy 2–3 word label (e.g. "Campus Trailblazer", "Friday Night Hero")
+   - age_range: target demographic age range
+   - interests: 3–5 interests this audience likely has
+   - platforms: which 1–3 social platforms this audience lives on
+   - description: 1–2 sentence profile of the typical fan
+
+Return JSON exactly:
+{
+  "bio": "...",
+  "strengths": ["...", "..."],
+  "brand_appeal_score": 72,
+  "audience_persona": {
+    "archetype": "...",
+    "age_range": "...",
+    "interests": ["..."],
+    "platforms": ["..."],
+    "description": "..."
+  }
+}`
+}
+
 export function buildBrandMatchPrompt(
   athlete: Athlete,
   brands: Array<{ id: string; name: string; industry: string; categories: string[]; target_sports: string[]; description: string | null }>

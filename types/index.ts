@@ -31,6 +31,14 @@ export interface Athlete {
   updated_at: string
 }
 
+export interface AudiencePersona {
+  archetype: string          // e.g. "Weekend Warrior", "Campus Influencer"
+  age_range: string          // e.g. "18–24"
+  interests: string[]        // e.g. ["fitness", "sneakers", "gaming"]
+  platforms: string[]        // e.g. ["instagram", "tiktok"]
+  description: string        // 1–2 sentence summary of ideal follower
+}
+
 export interface NilProfile {
   id: string
   athlete_id: string
@@ -45,6 +53,9 @@ export interface NilProfile {
   }
   asking_rate: number | null
   categories: string[]
+  strengths: string[]
+  brand_appeal_score: number | null
+  audience_persona: AudiencePersona | null
   generated_at: string | null
   created_at: string
   updated_at: string
