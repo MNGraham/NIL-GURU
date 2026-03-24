@@ -139,6 +139,29 @@ export interface SocialContentPack {
   generated_at:      string
 }
 
+// ---- Brand Recommendations ----
+
+export interface BrandCategoryRecommendation {
+  category: string           // e.g. "sports_apparel", "nutrition"
+  explanation: string        // why this category fits the athlete
+  outreach_message: string   // suggested DM / email to brands in this category
+}
+
+export interface BrandRecommendationResult {
+  recommendations: BrandCategoryRecommendation[]
+  engine: 'rules' | 'ai'    // which engine produced this result
+  generated_at: string
+}
+
+// Strategy interface — implement for rules now, swap to AI later
+export interface BrandRecommendationEngine {
+  recommend(input: {
+    sport: string
+    location: string
+    performance_type: string
+  }): BrandRecommendationResult
+}
+
 // API request/response shapes
 export interface GenerateContentRequest {
   athlete_id: string

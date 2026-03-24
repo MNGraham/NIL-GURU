@@ -39,6 +39,12 @@ const statRowSchema = z.object({
   unit:  z.string().max(20).default(''),
 })
 
+export const brandRecommendSchema = z.object({
+  sport:            z.string().min(1).max(60),
+  location:         z.string().min(1).max(120),
+  performance_type: z.string().min(1).max(60),
+})
+
 export const generateEnhancedProfileSchema = z.object({
   athlete_id: z.string().uuid(),
   stats:      z.array(z.object({
